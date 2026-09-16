@@ -4,9 +4,25 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_P417"
+        
+        xmlns:col ="clr-namespace:System.Collections;assembly=mscorlib"
+        xmlns:sys ="clr-namespace:System;assembly=mscorlib"
+        
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
+    <Window.Resources>
+        <col:ArrayList x:Key="days">
+            <sys:String>Понедельник</sys:String>
+            <sys:String>Вторник</sys:String>
+            <sys:String>Среда</sys:String>
+            <sys:String>Четверг</sys:String>
+            <sys:String>Пятница</sys:String>
+            <sys:String>Суббота</sys:String>
+            <sys:String>Воскресенье</sys:String>
+        </col:ArrayList>
+    </Window.Resources>
+    <Grid x:Name="layoutGrid">
+        
     </Grid>
 </Window>
+<!--Коментарий-->
