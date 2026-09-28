@@ -1,3 +1,5 @@
 <Solution>
-  <Project Path="WPF_P417/WPF_P417.csproj" />
+  <Project Path="P417_WPF/P417_WPF/P417_WPF.csproj" />
+  <Project Path="Task/Task.csproj" Id="7d584b93-9027-4c18-b039-07eaeb319123" />
+  <Project Path="TickTack/TickTack/TickTack.csproj" />
 </Solution>

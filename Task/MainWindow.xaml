@@ -1,0 +1,131 @@
+﻿<Window x:Class="Task.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Task"
+        mc:Ignorable="d"
+        Title="Автозаправочный комплекс" Height="450" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Icon="/cash.ico" Background="#FFB9B9B9" Foreground="Black">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <GroupBox Header="Автозаправка" Grid.Column="0" Grid.Row="0" Margin="5" Padding="10">
+            <StackPanel Grid.Row="0">
+                <Label Content="Выберите бензин:"/>
+                <ComboBox x:Name="FuelTypeComboBox" SelectionChanged="FuelTypeComboBox_SelectionChanged" Margin="0,0,0,10">
+                    <ComboBoxItem Content="АИ-92 (50 руб/л)" Tag="50"/>
+                    <ComboBoxItem Content="АИ-95 (55 руб/л)" Tag="55"/>
+                    <ComboBoxItem Content="ДТ (60 руб/л)" Tag="60"/>
+                </ComboBox>
+
+                <GroupBox Header="Как заправляться?" Margin="0,0,0,10">
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <RadioButton x:Name="RbLitres" Content="По литрам" IsChecked="True" Checked="RadioButtons_Checked" Margin="0,0,20,0"/>
+                        <RadioButton x:Name="RbMoney" Content="По сумме (руб)" Checked="RadioButtons_Checked"/>
+                    </StackPanel>
+                </GroupBox>
+
+                <Grid Margin="0,0,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Label Content="Литры:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TxtLitres" Grid.Row="0" Grid.Column="1" Margin="5" TextChanged="TxtLitres_TextChanged"/>
+
+                    <Label Content="Рубли:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"/>
+                    <TextBox x:Name="TxtMoney" Grid.Row="1" Grid.Column="1" Margin="5" TextChanged="TxtMoney_TextChanged"/>
+                </Grid>
+
+                <Separator Margin="0,10"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Label Content="Итого за бензин:" FontWeight="Bold" FontSize="14"/>
+                    <TextBlock x:Name="FuelTotalTextBlock" Text="0.00" FontSize="14" FontWeight="Bold" Foreground="DarkBlue" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                    <Label Content="руб." FontSize="14" FontWeight="Bold"/>
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
+
+        <GroupBox Header="Кафетерий" Grid.Column="1" Grid.Row="0" Margin="5" Padding="10">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <Grid Margin="0,5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <CheckBox x:Name="CbEspresso" Content="Эспрессо" VerticalAlignment="Center" Checked="CafeItem_Changed" Unchecked="CafeItem_Changed"/>
+                            <TextBlock Text="100 руб." Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            <TextBox x:Name="TxtEspressoCount" Text="0" Grid.Column="2" Margin="5,0" IsEnabled="{Binding IsChecked, ElementName=CbEspresso}" TextChanged="CafeItem_Changed"/>
+                        </Grid>
+
+                        <Grid Margin="0,5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <CheckBox x:Name="CbCappuccino" Content="Капучино" VerticalAlignment="Center" Checked="CafeItem_Changed" Unchecked="CafeItem_Changed"/>
+                            <TextBlock Text="150 руб." Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            <TextBox x:Name="TxtCappuccinoCount" Text="0" Grid.Column="2" Margin="5,0" IsEnabled="{Binding IsChecked, ElementName=CbCappuccino}" TextChanged="CafeItem_Changed"/>
+                        </Grid>
+
+                        <Grid Margin="0,5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <CheckBox x:Name="CbHotDog" Content="Хот-дог XL" VerticalAlignment="Center" Checked="CafeItem_Changed" Unchecked="CafeItem_Changed"/>
+                            <TextBlock Text="180 руб." Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            <TextBox x:Name="TxtHotDogCount" Text="0" Grid.Column="2" Margin="5,0" IsEnabled="{Binding IsChecked, ElementName=CbHotDog}" TextChanged="CafeItem_Changed"/>
+                        </Grid>
+
+                        <Grid Margin="0,5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <CheckBox x:Name="CbCroissant" Content="Круассан" VerticalAlignment="Center" Checked="CafeItem_Changed" Unchecked="CafeItem_Changed"/>
+                            <TextBlock Text="90 руб." Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            <TextBox x:Name="TxtCroissantCount" Text="0" Grid.Column="2" Margin="5,0" IsEnabled="{Binding IsChecked, ElementName=CbCroissant}" TextChanged="CafeItem_Changed"/>
+                        </Grid>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <StackPanel Grid.Row="1">
+                    <Separator Margin="0,10"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Label Content="Итого за кафе:" FontWeight="Bold" FontSize="14"/>
+                        <TextBlock x:Name="CafeTotalTextBlock" Text="0.00" FontSize="14" FontWeight="Bold" Foreground="DarkGreen" VerticalAlignment="Center" Margin="5,0,0,0"/>
+                        <Label Content="руб." FontSize="14" FontWeight="Bold"/>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </GroupBox>
+
+
+        <Button x:Name="BtnCalculate" Content="Посчитать общую стоимость" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" 
+                Height="40" Margin="5" FontSize="16" FontWeight="Bold" Background="LightGray" Click="BtnCalculate_Click"/>
+    </Grid>
+</Window>

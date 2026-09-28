@@ -1,7 +1,7 @@
-﻿<Application x:Class="WPF_P417.App"
+﻿<Application x:Class="P417_WPF.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:WPF_P417"
+             xmlns:local="clr-namespace:P417_WPF"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
          

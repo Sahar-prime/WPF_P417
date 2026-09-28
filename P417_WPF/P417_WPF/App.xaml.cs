@@ -2,7 +2,7 @@
 using System.Data;
 using System.Windows;
 
-namespace WPF_P417
+namespace P417_WPF
 {
     /// <summary>
     /// Interaction logic for App.xaml
