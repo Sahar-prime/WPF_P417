@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace P417_WPF
+﻿namespace P417_WPF
 {
     public class Phone
     {
