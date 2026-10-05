@@ -1,0 +1,121 @@
+﻿<Window x:Class="Task2.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TickTack"
+        xmlns:vm="clr-namespace:TickTack.ViewModels"
+        mc:Ignorable="d"
+        Title="Игра: Найди пару" Height="550" Width="450"
+        WindowStartupLocation="CenterScreen" Background="#F0F2F5">
+
+    <Window.DataContext>
+        <vm:MainViewModel />
+    </Window.DataContext>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <!-- Верхняя панель (Статистика) -->
+            <RowDefinition Height="Auto"/>
+            <!-- Игровое поле -->
+            <RowDefinition Height="*"/>
+            <!-- Нижняя панель (Управление) -->
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Статистика -->
+        <UniformGrid Grid.Row0="0" Columns="2" Margin="0,0,0,15">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                <TextBlock Text="Ходы: " FontSize="18" FontWeight="SemiBold" Foreground="#333333"/>
+                <TextBlock Text="{Binding Moves}" FontSize="18" FontWeight="Bold" Foreground="#007ACC"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <TextBlock Text="Время: " FontSize="18" FontWeight="SemiBold" Foreground="#333333"/>
+                <TextBlock Text="{Binding SecondsElapsed}" FontSize="18" FontWeight="Bold" Foreground="#007ACC"/>
+                <TextBlock Text=" сек." FontSize="18" FontWeight="SemiBold" Foreground="#333333"/>
+            </StackPanel>
+        </UniformGrid>
+
+        <!-- Игровое поле 4х4 -->
+        <ItemsControl Grid.Row="1" ItemsSource="{Binding Cards}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="4" Rows="4"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="{x:Type models:Card}">
+                    <Button Margin="5" 
+                            Command="{Binding DataContext.CardClickCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                            CommandParameter="{Binding}"
+                            FontSize="32"
+                            FontWeight="Bold"
+                            Focusable="False">
+
+                        <!-- Стилизация кнопки/карточки -->
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="#2E3A4E"/>
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="Content" Value="?"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Background="{TemplateBinding Background}" 
+                                                    CornerRadius="8" 
+                                                    BorderThickness="1" 
+                                                    BorderBrush="#1F2633">
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+
+                                <Style.Triggers>
+                                    <!-- Эффект наведения на закрытую карточку -->
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#3D4B66"/>
+                                    </Trigger>
+
+                                    <!-- Если карточка открыта лицом вверх -->
+                                    <DataTrigger Binding="{Binding IsRevealed}" Value="True">
+                                        <Setter Property="Background" Value="White"/>
+                                        <Setter Property="Foreground" Value="Black"/>
+                                        <Setter Property="Content" Value="{Binding Content}"/>
+                                    </DataTrigger>
+
+                                    <!-- Если пара совпала -->
+                                    <DataTrigger Binding="{Binding IsMatched}" Value="True">
+                                        <Setter Property="Background" Value="#A2E8A2"/>
+                                        <Setter Property="Foreground" Value="#1E561E"/>
+                                        <Setter Property="Content" Value="{Binding Content}"/>
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <!-- Кнопка перезапуска -->
+        <Button Grid.Row="2" 
+                Content="Начать заново" 
+                Command="{Binding RestartCommand}"
+                Margin="0,15,0,0" 
+                Padding="15,10" 
+                FontSize="16" 
+                FontWeight="SemiBold"
+                Background="#007ACC" 
+                Foreground="White"
+                BorderThickness="0"
+                Cursor="Hand">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="6"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+    </Grid>
+</Window>

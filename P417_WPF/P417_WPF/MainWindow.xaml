@@ -15,6 +15,5 @@
         <TextBox x:Name="myTextBlock" 
                    Text="{Binding ElementName=myTextBox,Path=Text,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                    Height="30"/>
-        <Button Height="15" Width="30" />
     </StackPanel>
 </Window>

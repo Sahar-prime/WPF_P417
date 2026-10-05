@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿using System.IO;
 using System.Windows;
-using System.Windows.Documents;
 using System.Windows.Input;
 using Microsoft.Win32;
 using TextEditor.Models;
