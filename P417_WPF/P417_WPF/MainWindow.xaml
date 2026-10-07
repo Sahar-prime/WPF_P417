@@ -10,10 +10,75 @@
         
         mc:Ignorable="d"
         Title="MainWindow" Height="500" Width="600" FontSize="24">
-    <StackPanel>
+    <!--<StackPanel>
         <TextBox x:Name="myTextBox" Height="30"/>
         <TextBox x:Name="myTextBlock" 
                    Text="{Binding ElementName=myTextBox,Path=Text,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                    Height="30"/>
-    </StackPanel>
+    </StackPanel>-->
+
+    <!--<Grid>
+        <Rectangle Width="100" Height="30"
+                   Stroke="Black" Fill="LightBlue" 
+                   Margin="30,21,470,433">
+            <Rectangle.RenderTransform>
+                <RotateTransform Angle="30"/>
+            </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Width="100" Height="30"
+           Stroke="Black" Fill="LightBlue" 
+           Margin="440,48,60,406">
+            <Rectangle.RenderTransform>
+                <TranslateTransform X="40" Y="-30"/>
+            </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Width="100" Height="30"
+            Stroke="Black" Fill="LightBlue" 
+            Margin="10,399,490,55">
+            <Rectangle.RenderTransform>
+                <ScaleTransform ScaleX="2.5" ScaleY="2.5"/>
+            </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Width="100" Height="30"
+            Stroke="Black" Fill="LightBlue" Margin="455,419,45,35" 
+            >
+            <Rectangle.RenderTransform>
+                <SkewTransform AngleX="50" AngleY="10"/>
+            </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Width="100" Height="30"
+            Stroke="Black" Fill="LightBlue" Margin="600,142,-100,312">
+            <Rectangle.RenderTransform>
+                <MatrixTransform Matrix="-1 0 -1 -2 -1 -3"/>
+            </Rectangle.RenderTransform>
+        </Rectangle>
+        <Rectangle Width="100" Height="30"
+            Stroke="Black" Fill="LightBlue" Margin="57,104,443,350">
+            <Rectangle.RenderTransform>
+                <TransformGroup>
+                    <RotateTransform Angle="50"/>
+                    <SkewTransform AngleX="-40"/>
+                </TransformGroup>
+            </Rectangle.RenderTransform>
+        </Rectangle>
+    </Grid>
+    -->
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Button Width="80" Height="30" Background="Bisque" 
+            Content="Hello">
+            <Button.RenderTransform>
+                <RotateTransform Angle="-50"/>
+            </Button.RenderTransform>
+        </Button>
+        <Button Grid.Column="1" Width="80" Height="30" Background="Bisque" 
+            Content="Hello">
+            <Button.LayoutTransform>
+                <RotateTransform Angle="-50"/>
+            </Button.LayoutTransform>
+        </Button>
+    </Grid>
 </Window>
