@@ -8,12 +8,4 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="td.jpg" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="td.jpg" />
-  </ItemGroup>
-
 </Project>

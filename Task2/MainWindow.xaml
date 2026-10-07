@@ -3,40 +3,27 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:TickTack"
-        xmlns:vm="clr-namespace:TickTack.ViewModels"
+        xmlns:local="clr-namespace:Task2"
         mc:Ignorable="d"
-        Title="Игра: Найди пару" Height="550" Width="450"
-        WindowStartupLocation="CenterScreen" Background="#F0F2F5">
+        Title="Игра Память (Memory Game)" Height="550" Width="450" Background="#F0F2F5">
 
-    <Window.DataContext>
-        <vm:MainViewModel />
-    </Window.DataContext>
-
-    <Grid Margin="20">
+    <Grid Margin="15">
         <Grid.RowDefinitions>
-            <!-- Верхняя панель (Статистика) -->
             <RowDefinition Height="Auto"/>
-            <!-- Игровое поле -->
             <RowDefinition Height="*"/>
-            <!-- Нижняя панель (Управление) -->
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- Статистика -->
-        <UniformGrid Grid.Row0="0" Columns="2" Margin="0,0,0,15">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                <TextBlock Text="Ходы: " FontSize="18" FontWeight="SemiBold" Foreground="#333333"/>
-                <TextBlock Text="{Binding Moves}" FontSize="18" FontWeight="Bold" Foreground="#007ACC"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                <TextBlock Text="Время: " FontSize="18" FontWeight="SemiBold" Foreground="#333333"/>
-                <TextBlock Text="{Binding SecondsElapsed}" FontSize="18" FontWeight="Bold" Foreground="#007ACC"/>
-                <TextBlock Text=" сек." FontSize="18" FontWeight="SemiBold" Foreground="#333333"/>
-            </StackPanel>
-        </UniformGrid>
+        <!-- Панель со статистикой -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,15">
+            <TextBlock Text="Ходы: " FontSize="18" FontWeight="Bold" Foreground="#333"/>
+            <TextBlock Text="{Binding Moves}" FontSize="18" FontWeight="Bold" Foreground="#007ACC" Width="60"/>
 
-        <!-- Игровое поле 4х4 -->
+            <TextBlock Text="Время: " FontSize="18" FontWeight="Bold" Foreground="#333" Margin="20,0,0,0"/>
+            <TextBlock Text="{Binding TimeDisplay}" FontSize="18" FontWeight="Bold" Foreground="#007ACC" Width="80"/>
+        </StackPanel>
+
+        <!-- Игровое поле -->
         <ItemsControl Grid.Row="1" ItemsSource="{Binding Cards}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -44,78 +31,37 @@
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
-                <DataTemplate DataType="{x:Type models:Card}">
-                    <Button Margin="5" 
-                            Command="{Binding DataContext.CardClickCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-                            CommandParameter="{Binding}"
-                            FontSize="32"
-                            FontWeight="Bold"
-                            Focusable="False">
-
-                        <!-- Стилизация кнопки/карточки -->
+                <DataTemplate>
+                    <!-- Кнопка-карточка -->
+                    <Button Margin="5" Click="Card_Click" Cursor="Hand">
                         <Button.Style>
                             <Style TargetType="Button">
-                                <Setter Property="Background" Value="#2E3A4E"/>
+                                <Setter Property="Background" Value="#2D2D30"/>
                                 <Setter Property="Foreground" Value="White"/>
-                                <Setter Property="Content" Value="?"/>
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="Button">
-                                            <Border Background="{TemplateBinding Background}" 
-                                                    CornerRadius="8" 
-                                                    BorderThickness="1" 
-                                                    BorderBrush="#1F2633">
-                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                            </Border>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-
+                                <Setter Property="FontSize" Value="28"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
                                 <Style.Triggers>
-                                    <!-- Эффект наведения на закрытую карточку -->
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="#3D4B66"/>
-                                    </Trigger>
-
-                                    <!-- Если карточка открыта лицом вверх -->
-                                    <DataTrigger Binding="{Binding IsRevealed}" Value="True">
+                                    <!-- Если карта открыта или совпала, меняем фон на светлый -->
+                                    <DataTrigger Binding="{Binding IsOpen}" Value="True">
                                         <Setter Property="Background" Value="White"/>
-                                        <Setter Property="Foreground" Value="Black"/>
-                                        <Setter Property="Content" Value="{Binding Content}"/>
+                                        <Setter Property="Foreground" Value="#333"/>
                                     </DataTrigger>
-
-                                    <!-- Если пара совпала -->
                                     <DataTrigger Binding="{Binding IsMatched}" Value="True">
-                                        <Setter Property="Background" Value="#A2E8A2"/>
-                                        <Setter Property="Foreground" Value="#1E561E"/>
-                                        <Setter Property="Content" Value="{Binding Content}"/>
-                                        <Setter Property="IsEnabled" Value="False"/>
+                                        <Setter Property="Background" Value="#E1F5FE"/>
+                                        <Setter Property="Foreground" Value="#0288D1"/>
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
                         </Button.Style>
+                        <TextBlock Text="{Binding CurrentValue}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Button>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
 
         <!-- Кнопка перезапуска -->
-        <Button Grid.Row="2" 
-                Content="Начать заново" 
-                Command="{Binding RestartCommand}"
-                Margin="0,15,0,0" 
-                Padding="15,10" 
-                FontSize="16" 
-                FontWeight="SemiBold"
-                Background="#007ACC" 
-                Foreground="White"
-                BorderThickness="0"
-                Cursor="Hand">
-            <Button.Resources>
-                <Style TargetType="Border">
-                    <Setter Property="CornerRadius" Value="6"/>
-                </Style>
-            </Button.Resources>
-        </Button>
+        <Button Grid.Row="2" Content="Новая игра" Height="40" Margin="0,15,0,0" 
+                FontSize="16" FontWeight="Bold" Background="#007ACC" Foreground="White"
+                Click="Restart_Click"/>
     </Grid>
 </Window>
